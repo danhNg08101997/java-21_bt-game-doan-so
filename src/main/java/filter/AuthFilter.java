@@ -16,21 +16,21 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("Filter đã được kích hoạt");
+        System.out.println("Filter đã được kích hoạt - Cần nhấn checkbox để đăng nhập");
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        if(!req.getServletPath().startsWith("/login")){
+        if (!req.getServletPath().startsWith("/login")) {
             System.out.println("Filter đang kiểm tra Login");
-            if (req.getSession().getAttribute("email") != null && req.getSession().getAttribute("password") != null){
-                System.out.println("Filter cho phép đăng nhập");
+            if (req.getSession().getAttribute("email") != null && req.getSession().getAttribute("password") != null) {
+                System.out.println("Filter cho phép đăng nhập có lưu session");
                 filterChain.doFilter(servletRequest, servletResponse);
-            }else {
+            } else {
                 System.out.println("Chưa đăng nhập Filter chuyển đến login page");
                 resp.sendRedirect(req.getContextPath() + "/login");
             }
-        }else {
+        } else {
             System.out.println("Login page");
             filterChain.doFilter(servletRequest, servletResponse);
         }
